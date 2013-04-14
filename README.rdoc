@@ -1,0 +1,3 @@
+== Welcome to Trade Server
+
+This is a wed front end to the mongo db saving all FX trades reported to the DTCC
