@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<h2> Trade[<%= @trade.dtcc_id  %>]</h2>
+
+<ul>
+	<% @trade.attributes.each_pair do |name, value| %>
+	<li> <%= name %> = <%= value %> </li>
+	<% end %>
+</ul>
+
+<%= link_to 'Edit', edit_trade_path(@trade) %> |
+<%= link_to 'Back', trades_path %>
+

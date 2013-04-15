@@ -1,0 +1,9 @@
+<h3>Home</h3>
+
+<% @users.each do |user| %>
+  <p>User: <%=link_to user.name, user %></p>
+<% end %>
+
+<h2> Trade Server </h2>
+<p>Trades <%= link_to 'Trades', trades_path %></p>
+
