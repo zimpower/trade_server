@@ -6,7 +6,11 @@ class TradesController < ApplicationController
   def index
 
     @trades = Trade.all.desc(:time_stamp).limit(100)
-    @sig_trades = Trade.or({:und_not.gte => BIG_NUM}, {:acc_not.gte => BIG_NUM}).desc(:time_stamp).limit(100)
+
+    # function() { return this.und_not > this.acc_not }
+
+    # @sig_trades = Trade.where(function() { return this.und_not > this.acc_not }).and({:und_not.gte => BIG_NUM}, {:acc_not.gte => BIG_NUM}).desc(:time_stamp).limit(100)
+    @sig_trades = Trade.and({:und_not.gte => BIG_NUM}, {:acc_not.gte => BIG_NUM}).desc(:time_stamp).limit(100)
     @opt_trades = Trade.where(:title.ne => "ForeignExchange:NDF").desc(:time_stamp).limit(100)
     @ndf_trades = Trade.where(title: "ForeignExchange:NDF").desc(:time_stamp).limit(100)
 

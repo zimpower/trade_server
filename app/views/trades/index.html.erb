@@ -16,17 +16,18 @@
 
 			<th>DTCC Id</th>
 			<th>TimeStamp</th>
-			<th>UND</th>match ':controller/:action/:id'
-			
+			<th>UND</th>
 			<th>ACC</th>
 			<th>UND Notional</th>
 			<th>ACC Notional</th>
+			<th>USD Equiv Notional</th>
 			<th>Strike</th>
 			<th>Sub Type</th>
 			<th>Expiry</th>
 			<th>PAY</th>
 			<th>Prem</th>
 			<th>Trade Type</th>
+			<th>Spot Ref</th>
 		</tr>
 	</thead>
 
@@ -38,17 +39,21 @@
 			<td><%= link_to 'Destroy', trade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
 			<td><%= trade.dtcc_id  %> </td>
-			<td><%= Time.parse(trade.time_stamp).strftime( '%Y %b %d %H:%M:%S' ) if trade.time_stamp  %> </td>
+			<% ts = Time.parse(trade.time_stamp["d"]+" "+trade.time_stamp["t"]) if trade.time_stamp %>
+			<td><%= ts.strftime( '%Y %b %d %H:%M:%S' ) if trade.time_stamp  %> </td>
 			<td><%= trade.und %> </td>
 			<td><%= trade.acc %> </td>
 			<td><%= number_with_precision(trade.und_not, :precision => 0, :delimiter => ',') %> </td>
 			<td><%= number_with_precision(trade.acc_not, :precision => 0, :delimiter => ',')  %> </td>
+			<td><%= number_with_precision(trade.m_usd_equiv_not, :precision => 0, :delimiter => ',')  %> </td>
 			<td><%= trade.strike %> </td>
 			<td><%= trade.type %> </td>
-			<td><%= trade.expiry.strftime( '%d %b %y' ) if trade.expiry %> </td>
+			<% ts = Time.parse(trade.expiry.to_s) if trade.expiry %>
+			<td><%= ts.strftime( '%Y %b %d %H:%M:%S' ) if trade.expiry  %> </td>
 			<td><%= trade.prem_ccy %> </td>
 			<td><%= number_with_precision(trade.prem, :precision => 0, :delimiter => ',') %> </td>			
 			<td><%= trade.taxonomy %> </td>
+			<td><%= trade.m_spot_ref %> </td>
 		</tr>
 		<% end %>
 	</tbody>
@@ -69,12 +74,14 @@
 			<th>ACC</th>
 			<th>UND Notional</th>
 			<th>ACC Notional</th>
+			<th>USD Equiv Notional</th>
 			<th>Strike</th>
 			<th>Sub Type</th>
 			<th>Expiry</th>
 			<th>PAY</th>
 			<th>Prem</th>
 			<th>Trade Type</th>
+			<th>Spot Ref</th>
 		</tr>
 	</thead>
 
@@ -86,17 +93,21 @@
 			<td><%= link_to 'Destroy', trade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
 			<td><%= trade.dtcc_id  %> </td>
-			<td><%= Time.parse(trade.time_stamp).strftime( '%Y %b %d %H:%M:%S' ) if trade.time_stamp  %> </td>
+			<% ts = Time.parse(trade.time_stamp.to_s) if trade.time_stamp %>
+			<td><%= ts.strftime( '%Y %b %d %H:%M:%S' ) if trade.time_stamp  %> </td>
 			<td><%= trade.und %> </td>
 			<td><%= trade.acc %> </td>
 			<td><%= number_with_precision(trade.und_not, :precision => 0, :delimiter => ',') %> </td>
 			<td><%= number_with_precision(trade.acc_not, :precision => 0, :delimiter => ',')  %> </td>
+			<td><%= number_with_precision(trade.m_usd_equiv_not, :precision => 0, :delimiter => ',')  %> </td>
 			<td><%= trade.strike %> </td>
 			<td><%= trade.type %> </td>
-			<td><%= trade.expiry.strftime( '%d %b %y' ) if trade.expiry %> </td>
+			<% ts = Time.parse(trade.expiry.to_s) if trade.expiry %>
+			<td><%= ts.strftime( '%Y %b %d %H:%M:%S' ) if trade.expiry  %> </td>
 			<td><%= trade.prem_ccy %> </td>
 			<td><%= number_with_precision(trade.prem, :precision => 0, :delimiter => ',') %> </td>			
 			<td><%= trade.taxonomy %> </td>
+			<td><%= trade.m_spot_ref %> </td>
 		</tr>
 		<% end %>
 	</tbody>
@@ -117,12 +128,14 @@
 			<th>ACC</th>
 			<th>UND Notional</th>
 			<th>ACC Notional</th>
+			<th>USD Equiv Notional</th>
 			<th>Strike</th>
 			<th>Sub Type</th>
 			<th>Expiry</th>
 			<th>PAY</th>
 			<th>Prem</th>
 			<th>Trade Type</th>
+			<th>Spot Ref</th>
 		</tr>
 	</thead>
 
@@ -134,17 +147,21 @@
 			<td><%= link_to 'Destroy', trade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
 			<td><%= trade.dtcc_id  %> </td>
-			<td><%= Time.parse(trade.time_stamp).strftime( '%Y %b %d %H:%M:%S' ) if trade.time_stamp  %> </td>
+			<% ts = Time.parse(trade.time_stamp.to_s) if trade.time_stamp %>
+			<td><%= ts.strftime( '%Y %b %d %H:%M:%S' ) if trade.time_stamp  %> </td>
 			<td><%= trade.und %> </td>
 			<td><%= trade.acc %> </td>
 			<td><%= number_with_precision(trade.und_not, :precision => 0, :delimiter => ',') %> </td>
 			<td><%= number_with_precision(trade.acc_not, :precision => 0, :delimiter => ',')  %> </td>
+			<td><%= number_with_precision(trade.m_usd_equiv_not, :precision => 0, :delimiter => ',')  %> </td>
 			<td><%= trade.strike %> </td>
 			<td><%= trade.type %> </td>
-			<td><%= trade.expiry.strftime( '%d %b %y' ) if trade.expiry %> </td>
+			<% ts = Time.parse(trade.expiry.to_s) if trade.expiry %>
+			<td><%= ts.strftime( '%Y %b %d %H:%M:%S' ) if trade.expiry  %> </td>
 			<td><%= trade.prem_ccy %> </td>
 			<td><%= number_with_precision(trade.prem, :precision => 0, :delimiter => ',') %> </td>			
 			<td><%= trade.taxonomy %> </td>
+			<td><%= trade.m_spot_ref %> </td>
 		</tr>
 		<% end %>
 	</tbody>
