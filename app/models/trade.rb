@@ -1,5 +1,6 @@
 class Trade
   include Mongoid::Document
+  store_in collection: "test_trades"
   field :rss_guid, type: String
   field :dtcc_id, type: String
   field :orig_dtcc_id, type: String
@@ -21,10 +22,10 @@ class Trade
   field :m_spot_ref, type: Numeric
   field :m_usd_equiv_not, type: Numeric
   
-  
-  def hash_to_date(h)                 # => expect {"d" => "2001-12-29","t" => "15:30:12"} 
-    str = "#{h['d']} #{h['t']}"       # => make "2001-12-29 15:30:12"
-    ret = Time.parse(str).utc
-  end
-  
+  index( { dtcc_id: 1 } , { unique: true } )
+  index( { taxonomy: 1} )
+  index( { m_usd_equiv_not: 1} )
+  index( { "expiry.d" => -1 } )
+  index( { "time_stamp.d" =>  -1 } )
+
 end

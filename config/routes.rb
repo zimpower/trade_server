@@ -4,6 +4,7 @@ TradeServer::Application.routes.draw do
   resources :users
   resources :trades
 
+  match 'trades/pair/:pair' => 'trades#pair'
   match 'trades/:start_date/:end_date' => 'trades#range'
   
   # The priority is based upon order of creation:

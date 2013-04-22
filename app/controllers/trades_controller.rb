@@ -10,10 +10,15 @@ class TradesController < ApplicationController
     # function() { return this.und_not > this.acc_not }
 
     # @sig_trades = Trade.where(function() { return this.und_not > this.acc_not }).and({:und_not.gte => BIG_NUM}, {:acc_not.gte => BIG_NUM}).desc(:time_stamp).limit(100)
-    @sig_trades = Trade.and({:und_not.gte => BIG_NUM}, {:acc_not.gte => BIG_NUM}).desc(:time_stamp).limit(100)
+    @sig_trades = Trade.desc(:m_usd_equiv_not).limit(100)
     @opt_trades = Trade.where(:title.ne => "ForeignExchange:NDF").desc(:time_stamp).limit(100)
     @ndf_trades = Trade.where(title: "ForeignExchange:NDF").desc(:time_stamp).limit(100)
 
+    @pairs = Trade.distinct(:m_alpha_pair)
+    @pairs_hash = {}
+    @pairs.each do |pair|
+      @pairs_hash[pair] = Trade.where(m_alpha_pair: pair).sum(:m_usd_equiv_not)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -71,6 +76,27 @@ class TradesController < ApplicationController
   def edit
     @trade = Trade.find(params[:id])
   end
+
+
+
+  # POST /trades
+  # POST /trades.json
+  def pair
+    und = params[:pair][0..2]
+    acc = params[:pair][3..5]
+    alpha_pair = und < acc ? und+acc : acc+und 
+    puts alpha_pair
+    @trades = Trade.where(  m_alpha_pair: alpha_pair, :m_usd_equiv_not.gte => BIG_NUM ).desc(:time_stamp).limit(100)
+    puts @trades.count
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @trades }
+    end
+  end
+
+
+
 
   # POST /trades
   # POST /trades.json

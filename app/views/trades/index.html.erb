@@ -1,7 +1,25 @@
 <h1>Trade list summary (100 limit)</h1>
 
+<h2>Trade notional summary<h2>
+<table id ='trade_table'>
+	<thead>
+		<tr>
+			<th> Pair</th>
+			<th>USD Equiv Notional</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @pairs_hash.sort_by{|p,n| n}.reverse.each do |p_array|%>
+		<tr>
+			<td><%= p_array[0] %></td>
+			<td><%= number_with_precision(p_array[1], :precision => 0, :delimiter => ',')%> </td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
 
-<h2> Latest (<%=@opt_trades.count%>/100) options trades </h2>
+
+<h2> Latest (100/<%=@opt_trades.count%>) options trades </h2>
 
 	<%= date_select "report", "start_date", :default => -1.days.from_now %>
 	to <%= date_select "report", "end_date", :default => 0.days.from_now %>
@@ -49,7 +67,7 @@
 			<td><%= trade.strike %> </td>
 			<td><%= trade.type %> </td>
 			<% ts = Time.parse(trade.expiry.to_s) if trade.expiry %>
-			<td><%= ts.strftime( '%Y %b %d %H:%M:%S' ) if trade.expiry  %> </td>
+			<td><%= ts.strftime( '%d %b %Y' ) if trade.expiry  %> </td>
 			<td><%= trade.prem_ccy %> </td>
 			<td><%= number_with_precision(trade.prem, :precision => 0, :delimiter => ',') %> </td>			
 			<td><%= trade.taxonomy %> </td>
@@ -59,7 +77,7 @@
 	</tbody>
 </table>
 
-<h2> Latest (<%=@sig_trades.count%>/100) large(> <%=number_with_precision(BIG_NUM, :precision => 0, :delimiter => ',')%> ) trades </h2>
+<h2> Top 100 large trades </h2>
 
 <table id ='trade_table'>
 	<thead>
@@ -103,7 +121,7 @@
 			<td><%= trade.strike %> </td>
 			<td><%= trade.type %> </td>
 			<% ts = Time.parse(trade.expiry.to_s) if trade.expiry %>
-			<td><%= ts.strftime( '%Y %b %d %H:%M:%S' ) if trade.expiry  %> </td>
+			<td><%= ts.strftime( '%d %b %Y' ) if trade.expiry  %> </td>
 			<td><%= trade.prem_ccy %> </td>
 			<td><%= number_with_precision(trade.prem, :precision => 0, :delimiter => ',') %> </td>			
 			<td><%= trade.taxonomy %> </td>
@@ -114,7 +132,7 @@
 </table>
 <br />
 
-<h2> Latest (<%=@trades.count%>/100) all trades </h2>
+<h2> Latest (100 of <%=@trades.count%>) all trades </h2>
 <table id ='trade_table'>
 	<thead>
 		<tr>
@@ -157,7 +175,7 @@
 			<td><%= trade.strike %> </td>
 			<td><%= trade.type %> </td>
 			<% ts = Time.parse(trade.expiry.to_s) if trade.expiry %>
-			<td><%= ts.strftime( '%Y %b %d %H:%M:%S' ) if trade.expiry  %> </td>
+			<td><%= ts.strftime( '%d %b %Y' ) if trade.expiry  %> </td>
 			<td><%= trade.prem_ccy %> </td>
 			<td><%= number_with_precision(trade.prem, :precision => 0, :delimiter => ',') %> </td>			
 			<td><%= trade.taxonomy %> </td>
